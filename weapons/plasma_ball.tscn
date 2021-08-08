@@ -1,0 +1,32 @@
+[gd_scene load_steps=5 format=2]
+
+[ext_resource path="res://weapons/plasma_ball.gd" type="Script" id=1]
+
+[sub_resource type="SphereShape" id=1]
+radius = 0.2
+
+[sub_resource type="SpatialMaterial" id=2]
+albedo_color = Color( 0.239216, 0.886275, 0.129412, 1 )
+
+[sub_resource type="SphereMesh" id=3]
+material = SubResource( 2 )
+radius = 0.2
+height = 0.4
+radial_segments = 12
+rings = 12
+
+[node name="PlasmaBall" type="RigidBody"]
+mass = 0.05
+script = ExtResource( 1 )
+
+[node name="CollisionShape" type="CollisionShape" parent="."]
+shape = SubResource( 1 )
+
+[node name="MeshInstance" type="MeshInstance" parent="."]
+mesh = SubResource( 3 )
+material/0 = null
+
+[node name="LingerTimer" type="Timer" parent="."]
+one_shot = true
+
+[connection signal="timeout" from="LingerTimer" to="." method="queue_free"]

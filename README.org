@@ -1,0 +1,15 @@
+* CherryFlavouredPepsi
+
+A work-in-progress space-combat game. There isn't much to see as of
+now.
+
+** Controls
+
+- Mouse to control pitch and yaw.
+- =WASD= for horizontal movement, and =RF= for vertical.
+- =QE= to roll.
+- =LMB= to shoot.
+- =RMB= to slow down.
+
+The green pointer is your velocity vector relative to the asteroid
+field. The red circles mark your enemies: try to shoot them down!

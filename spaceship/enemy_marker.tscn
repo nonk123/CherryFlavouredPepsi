@@ -1,0 +1,9 @@
+[gd_scene load_steps=2 format=2]
+
+[ext_resource path="res://spaceship/enemy_marker.png" type="Texture" id=1]
+
+[node name="EnemyMarker" type="Sprite3D"]
+modulate = Color( 0.870588, 0, 0, 1 )
+pixel_size = 0.02
+shaded = true
+texture = ExtResource( 1 )
