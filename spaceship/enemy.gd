@@ -11,4 +11,4 @@ func _process(_delta: float) -> void:
 	
 	if nearest_enemy:
 		var distance := nearest_enemy.translation - translation
-		velocity_control = transform.basis.xform(distance).normalized()
+		velocity_control = transform.basis.xform_inv(distance).normalized()
