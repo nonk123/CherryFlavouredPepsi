@@ -18,3 +18,9 @@ far = 1000.0
 [node name="ShootingTimer" type="Timer" parent="."]
 wait_time = 0.8
 one_shot = true
+
+[node name="DestructionTimer" type="Timer" parent="."]
+wait_time = 3.0
+one_shot = true
+
+[connection signal="timeout" from="DestructionTimer" to="." method="queue_free"]

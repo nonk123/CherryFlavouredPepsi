@@ -25,5 +25,15 @@ func get_bodies_affected_by_gravity() -> Array:
 	return nodes
 
 
-func spawn_particles(particles: CPUParticles) -> void:
-	space.particles.add_child(particles)
+func spawn_explosion(radius: float, duration: float, position: Vector3, attachment_point: Spatial = null):
+	var particles = preload("res://spaceship/explosion.tscn").instance()
+	
+	particles.radius = radius
+	particles.lifetime = duration
+	
+	if attachment_point:
+		particles.translation = position - attachment_point.translation
+		attachment_point.add_child(particles)
+	else:
+		particles.translation = position
+		space.particles.add_child(particles)

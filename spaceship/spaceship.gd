@@ -19,8 +19,8 @@ class ProjectileWeapon extends Weapon:
 class PlasmaBall extends ProjectileWeapon:
 	func _init():
 		effective_range = 200.0
-		fire_rate = 0.5
-		damage = 30.0
+		fire_rate = 0.3
+		damage = 0.8
 		projectile_speed = 50.0
 	
 	func create_projectile() -> Node:
@@ -52,6 +52,8 @@ var rotation_control := Vector3.ZERO
 
 var halt_control := false
 
+var dead := false
+
 onready var shooting_timer := $ShootingTimer
 
 
@@ -62,6 +64,11 @@ func _ready() -> void:
 
 
 func _integrate_forces(state: PhysicsDirectBodyState) -> void:
+	if dead:
+		state.linear_velocity = Vector3.ZERO
+		state.angular_velocity = Vector3.ZERO
+		return
+	
 	var force := transform.basis.xform(velocity_control) * acceleration
 	state.add_central_force(force)
 	
@@ -119,17 +126,11 @@ func _sort_by_distance(a: Spaceship, b: Spaceship) -> bool:
 func deal_damage(amount: float) -> void:
 	health -= amount
 	
-	if health <= 0.01:
+	if health <= 0.01 and not dead:
+		dead = true
 		emit_signal("dead")
-		explode()
-		queue_free()
-
-
-func explode():
-	var particles = preload("res://spaceship/explosion.tscn").instance()
-	particles.radius = radius
-	particles.translation = translation
-	Global.spawn_particles(particles)
+		Global.spawn_explosion(radius, 5.0, translation)
+		$DestructionTimer.start()
 
 
 func set_weapon(new_weapon: Weapon) -> void:
