@@ -74,26 +74,30 @@ func draw_enemy_markers() -> void:
 	var new_count := min(len(enemies), MAX_ENEMY_MARKERS)
 	var old_count := enemy_markers.get_child_count()
 	
-	var enemy_marker := preload("res://spaceship/enemy_marker.tscn")
-	
 	if new_count > old_count:
 		for _i in range(new_count - old_count):
-			enemy_markers.add_child(enemy_marker.instance())
+			var enemy_marker := preload("res://spaceship/enemy_marker.tscn").instance()
+			enemy_markers.add_child(enemy_marker)
 	elif new_count < old_count:
 		for _i in range(old_count - new_count):
-			var child = enemy_markers.get_child(0)
+			var child := enemy_markers.get_child(0)
 			enemy_markers.remove_child(child)
 			child.queue_free()
 	
 	for idx in range(new_count):
-		var marker = enemy_markers.get_child(idx)
+		var enemy_marker := enemy_markers.get_child(idx)
+		var enemy: Spaceship = enemies[idx]
 		
-		var position = enemies[idx].translation - translation
+		var position = enemy.translation - translation
 		var distance = position.length()
 		
-		marker.look_at_from_position(position.normalized(), Vector3.ZERO, local_up)
-		marker.scale.x = max(0.02, enemies[idx].radius / distance)
-		marker.scale.y = marker.scale.x
+		enemy_marker.look_at_from_position(position.normalized(), Vector3.ZERO, local_up)
+		enemy_marker.scale.x = max(0.02, enemy.radius / distance)
+		enemy_marker.scale.y = enemy_marker.scale.x
+		
+		var percentage := enemy.health / enemy.max_health
+		var marker_ring := enemy_marker.get_node("MarkerRing")
+		marker_ring.health_percentage = percentage
 
 
 func draw_prediction_line() -> void:

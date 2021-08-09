@@ -1,7 +1,7 @@
 extends Spaceship
 
 
-func _init():
+func _init() -> void:
 	team = 1
 
 
