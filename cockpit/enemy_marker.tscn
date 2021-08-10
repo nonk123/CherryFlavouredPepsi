@@ -1,11 +1,11 @@
 [gd_scene load_steps=5 format=2]
 
-[ext_resource path="res://spaceship/enemy_marker.png" type="Texture" id=1]
-[ext_resource path="res://spaceship/marker_ring.gd" type="Script" id=2]
+[ext_resource path="res://cockpit/marker_ring.gd" type="Script" id=1]
+[ext_resource path="res://cockpit/enemy_marker.png" type="Texture" id=2]
 
 [sub_resource type="SpatialMaterial" id=1]
 flags_transparent = true
-albedo_texture = ExtResource( 1 )
+albedo_texture = ExtResource( 2 )
 
 [sub_resource type="QuadMesh" id=2]
 material = SubResource( 1 )
@@ -17,4 +17,4 @@ size = Vector2( 2.5, 2.5 )
 transform = Transform( -1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, 0, 0, 0 )
 mesh = SubResource( 2 )
 material/0 = null
-script = ExtResource( 2 )
+script = ExtResource( 1 )

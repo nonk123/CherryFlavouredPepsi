@@ -25,15 +25,22 @@ func get_bodies_affected_by_gravity() -> Array:
 	return nodes
 
 
-func spawn_explosion(radius: float, duration: float, position: Vector3, attachment_point: Spatial = null):
+func spawn_explosion(radius: float, duration: float, position: Vector3):
 	var particles = preload("res://spaceship/explosion.tscn").instance()
-	
 	particles.radius = radius
 	particles.lifetime = duration
+	particles.translation = position
+	space.particles.add_child(particles)
+
+
+func get_colour_from_health(health_percentage: float) -> Color:
+	var full_health := Color(0.1, 1.0, 0.0)
+	var some_health := Color(0.8, 0.8, 0.0)
+	var low_health := Color(1.0, 0.1, 0.0)
 	
-	if attachment_point:
-		particles.translation = position - attachment_point.translation
-		attachment_point.add_child(particles)
+	if health_percentage >= 0.5:
+		var weight := 2.0 * (health_percentage - 0.5)
+		return some_health.linear_interpolate(full_health, weight)
 	else:
-		particles.translation = position
-		space.particles.add_child(particles)
+		var weight := 2.0 * health_percentage
+		return low_health.linear_interpolate(some_health, weight)

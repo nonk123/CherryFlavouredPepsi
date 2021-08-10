@@ -2,9 +2,9 @@
 
 [ext_resource path="res://spaceship/explosion.gd" type="Script" id=2]
 
-[sub_resource type="Curve" id=3]
+[sub_resource type="Curve" id=1]
 max_value = 2.0
-_data = [ Vector2( 0, 0 ), 0.0, 6.42828, 0, 0, Vector2( 0.883721, 2 ), 0.0, 0.0, 0, 0, Vector2( 1, 0 ), -20.1039, 0.0, 0, 0 ]
+_data = [ Vector2( 0, 0 ), 0.0, 6.42828, 0, 0, Vector2( 0.738372, 2 ), -0.100232, 0.0633917, 0, 0, Vector2( 1, 0 ), -20.1039, 0.0, 0, 0 ]
 
 [node name="Explosion" type="CPUParticles"]
 emitting = false
@@ -13,5 +13,5 @@ one_shot = true
 direction = Vector3( 0, 1, 0 )
 spread = 180.0
 gravity = Vector3( 0, 0, 0 )
-scale_amount_curve = SubResource( 3 )
+scale_amount_curve = SubResource( 1 )
 script = ExtResource( 2 )

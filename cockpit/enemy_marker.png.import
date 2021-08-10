@@ -2,15 +2,15 @@
 
 importer="texture"
 type="StreamTexture"
-path="res://.import/velocity_vector.png-15abf53088589b7f7faf1e501c034383.stex"
+path="res://.import/enemy_marker.png-7b60d9e5cfd67fc67e841b8bc039f723.stex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://spaceship/velocity_vector.png"
-dest_files=[ "res://.import/velocity_vector.png-15abf53088589b7f7faf1e501c034383.stex" ]
+source_file="res://cockpit/enemy_marker.png"
+dest_files=[ "res://.import/enemy_marker.png-7b60d9e5cfd67fc67e841b8bc039f723.stex" ]
 
 [params]
 
@@ -20,7 +20,7 @@ compress/hdr_mode=0
 compress/bptc_ldr=0
 compress/normal_map=0
 flags/repeat=0
-flags/filter=true
+flags/filter=false
 flags/mipmaps=false
 flags/anisotropic=false
 flags/srgb=1

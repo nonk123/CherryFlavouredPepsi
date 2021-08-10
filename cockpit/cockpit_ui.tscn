@@ -1,0 +1,74 @@
+[gd_scene load_steps=10 format=2]
+
+[ext_resource path="res://default_env.tres" type="Environment" id=1]
+[ext_resource path="res://cockpit/crosshair.png" type="Texture" id=2]
+[ext_resource path="res://cockpit/velocity_vector.png" type="Texture" id=3]
+[ext_resource path="res://cockpit/cockpit_ui.gd" type="Script" id=4]
+
+[sub_resource type="World" id=1]
+environment = ExtResource( 1 )
+
+[sub_resource type="SpatialMaterial" id=2]
+flags_transparent = true
+albedo_color = Color( 0.184314, 0.827451, 0.0901961, 1 )
+albedo_texture = ExtResource( 3 )
+
+[sub_resource type="QuadMesh" id=3]
+material = SubResource( 2 )
+
+[sub_resource type="SpatialMaterial" id=4]
+flags_transparent = true
+albedo_color = Color( 0.839216, 0.0627451, 0.0627451, 1 )
+albedo_texture = ExtResource( 2 )
+
+[sub_resource type="QuadMesh" id=5]
+material = SubResource( 4 )
+
+[node name="Cockpit" type="Control"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+script = ExtResource( 4 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="CockpitContainer" type="ViewportContainer" parent="."]
+anchor_right = 1.0
+anchor_bottom = 1.0
+stretch = true
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Viewport" type="Viewport" parent="CockpitContainer"]
+size = Vector2( 1024, 600 )
+own_world = true
+world = SubResource( 1 )
+transparent_bg = true
+handle_input_locally = false
+render_target_update_mode = 3
+gui_disable_input = true
+
+[node name="Root" type="Spatial" parent="CockpitContainer/Viewport"]
+
+[node name="Predictions" type="Spatial" parent="CockpitContainer/Viewport/Root"]
+
+[node name="VelocityVector" type="Spatial" parent="CockpitContainer/Viewport/Root"]
+
+[node name="MeshInstance" type="MeshInstance" parent="CockpitContainer/Viewport/Root/VelocityVector"]
+transform = Transform( -1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, 0, 0, 0 )
+cast_shadow = 0
+mesh = SubResource( 3 )
+material/0 = null
+
+[node name="EnemyMarkers" type="Spatial" parent="CockpitContainer/Viewport/Root"]
+
+[node name="Crosshair" type="MeshInstance" parent="CockpitContainer/Viewport/Root"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -8 )
+mesh = SubResource( 5 )
+material/0 = null
+
+[node name="Camera" type="Camera" parent="CockpitContainer/Viewport/Root"]
+current = true
+fov = 80.0
+far = 250.0
