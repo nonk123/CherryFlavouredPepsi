@@ -4,6 +4,8 @@
 
 [node name="Spaceship" type="RigidBody"]
 mass = 3.0
+contacts_reported = 3
+contact_monitor = true
 can_sleep = false
 script = ExtResource( 1 )
 
@@ -23,4 +25,5 @@ one_shot = true
 wait_time = 3.0
 one_shot = true
 
+[connection signal="body_entered" from="." to="." method="_on_collision"]
 [connection signal="timeout" from="DestructionTimer" to="." method="queue_free"]

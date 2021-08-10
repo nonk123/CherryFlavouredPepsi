@@ -24,10 +24,14 @@ func _ready() -> void:
 	place_asteroids()
 	place_enemies()
 	
+	ensure_player_exists()
+	
 	Global.space = self
 
 
 func _physics_process(_delta: float) -> void:
+	ensure_player_exists()
+	
 	for body in Global.get_bodies_affected_by_gravity():
 		var total_gravity := Vector3.ZERO
 		
@@ -39,8 +43,18 @@ func _physics_process(_delta: float) -> void:
 		body.add_central_force(total_gravity)
 
 
+func ensure_player_exists() -> void:
+	var player: Spaceship = spaceships.get_node_or_null("Player")
+	
+	if not player:
+		player = preload("res://spaceship/spaceship.tscn").instance()
+		player.name = "Player"
+		player.set_script(preload("res://spaceship/player.gd"))
+		spaceships.add_child(player)
+
+
 func is_occupied(point: Vector3, radius: float) -> bool:
-	var solids = asteroids.get_children()
+	var solids := asteroids.get_children()
 	solids.append_array(spaceships.get_children())
 	
 	for solid in solids:
@@ -52,7 +66,7 @@ func is_occupied(point: Vector3, radius: float) -> bool:
 
 func get_random_point(radius: float) -> Vector3:
 	while true:
-		var point = Vector3(randf() - 0.5, randf() - 0.5, randf() - 0.5) * 2.0 * extents
+		var point := Vector3(randf() - 0.5, randf() - 0.5, randf() - 0.5) * 2.0 * extents
 		
 		if not is_occupied(point, radius):
 			return point
@@ -70,7 +84,7 @@ func place_asteroids() -> void:
 
 func place_enemies() -> void:
 	for _i in range(enemies_count):
-		var enemy = preload("res://spaceship/spaceship.tscn").instance()
+		var enemy := preload("res://spaceship/spaceship.tscn").instance()
 		enemy.translation = get_random_point(enemy.radius)
 		enemy.set_script(preload("res://spaceship/enemy.gd"))
 		spaceships.add_child(enemy)

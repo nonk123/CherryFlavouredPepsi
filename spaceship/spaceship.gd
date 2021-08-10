@@ -27,20 +27,18 @@ class PlasmaBall extends ProjectileWeapon:
 		return preload("res://weapons/plasma_ball.tscn").instance()
 
 
-signal dead()
-
-
 export(Mesh) var mesh = preload("res://spaceship/default_mesh.tres")
 
-export var acceleration := 20.0
+export var acceleration := 30.0
 export var mobility := 6.0
 
-export var max_speed := 15.0
+export var max_speed := 20.0
 export var max_torque := 7.0
 
 export var radius := 1.5
 
 export var max_health := 100.0
+export var collision_damage := 3.0
 
 export var team := 0
 
@@ -65,8 +63,6 @@ func _ready() -> void:
 
 func _integrate_forces(state: PhysicsDirectBodyState) -> void:
 	if dead:
-		state.linear_velocity = Vector3.ZERO
-		state.angular_velocity = Vector3.ZERO
 		return
 	
 	var force := transform.basis.xform(velocity_control) * acceleration
@@ -123,12 +119,19 @@ func _sort_by_distance(a: Spaceship, b: Spaceship) -> bool:
 	return distance_a < distance_b
 
 
+func _on_collision(body: PhysicsBody) -> void:
+	var body_velocity := (body as RigidBody).linear_velocity if body is RigidBody else Vector3.ZERO
+	var total_velocity := linear_velocity - body_velocity
+	
+	if total_velocity.length() > 5.0:
+		deal_damage(collision_damage * total_velocity.length())
+
+
 func deal_damage(amount: float) -> void:
 	health -= amount
 	
 	if health <= 0.01 and not dead:
 		dead = true
-		emit_signal("dead")
 		Global.spawn_explosion(radius, 5.0, translation)
 		$DestructionTimer.start()
 
